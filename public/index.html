@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>バトル生成</h2>
+
+<textarea id="input" placeholder="追加指示（例：今回は大志が勝つ）" style="width:300px;height:100px;"></textarea>
+<br><br>
+
+<button onclick="send()">生成</button>
+
+<pre id="output"></pre>
+
+<script>
+async function send() {
+  const text = document.getElementById("input").value;
+
+  const res = await fetch("/generate", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ prompt: text })
+  });
+
+  const data = await res.json();
+  document.getElementById("output").innerText = data.reply;
+}
+</script>
+
+</body>
+</html>
